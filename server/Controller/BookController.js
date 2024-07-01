@@ -9,34 +9,17 @@ router.post("/",
     async (req, res) => {
         //console.log("User authenticated: ", req.user)
         try {
-            const { title,
-    author,
-    firstPublished,
-    editions,
-    previewable,        
-    logCount,
-    url,
-    coverImage} = req.body;
-            if (!title ||
-                !author ||
-                !firstPublished ||
-                !editions || 
-                !previewable ||         
-                !logCount || 
-                !url ||
-                !coverImage) {
+            const { title,author_key, author_name   } = req.body;
+            if (!title || !author_key || !author_name) {
                 return res
                     .status(301)
                     .json({ err: "Insufficient details to create book." });
             }
-            const bookdetails = { title,
-                author,
-                firstPublished,
-                editions,
-                previewable,        
-                logCount,
-                url,
-                coverImage };
+            const bookdetails = {
+                title,
+                author_key,
+                author_name
+            };
             const createbook = await Book.create(bookdetails);
             return res.status(200).json(createbook);
         } catch (error) {
@@ -45,4 +28,4 @@ router.post("/",
         }
     });
 
-    module.exports = router;
+module.exports = router;

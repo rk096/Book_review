@@ -7,34 +7,14 @@ const bookschema = new mongoose.Schema({
         type: String,
         required: true
     },
-    author: {
+    author_key:[ {
         type: String,
         required: true
-    },
-    firstPublished: {
+    }],
+    author_name: [{
         type: String,
         required: true
-    },
-    editions: {
-        type: Number,
-        required: true
-    },
-    previewable: {
-        type: Number,
-        required: true
-    },
-    logCount: {
-        type: Number,
-        required: true
-    },
-    url: {
-        type: String,
-        required: true
-    },
-    coverImage: {
-        type: String,
-        required: true
-    }
+    }],
         
 })
 
