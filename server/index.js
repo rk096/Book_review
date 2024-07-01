@@ -7,6 +7,7 @@ const JwtStrategy = require("passport-jwt").Strategy,
     ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
 const reviewroute = require('./Controller/ReviewController');
+const bookroute = require('./Controller/BookController');
 
 
 const port = 8000;
@@ -51,6 +52,9 @@ passport.use(
     })
 );
 
+
+
+
 app.get("/", (req, res) => {
     res.send("hello world");
 
@@ -58,6 +62,7 @@ app.get("/", (req, res) => {
 
 app.use('/auth', authroute);
 app.use('/reviews', reviewroute);
+app.use('/books', bookroute);
 
 
 app.listen(port, () => {

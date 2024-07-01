@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const reviewschema = new mongoose.Schema({
     book_id: {
-        type: String,
-        required: true
+         type: mongoose.Schema.Types.ObjectId,
+        ref: "Books"
     },
 
     rating: {

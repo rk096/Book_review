@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Review = require("../Models/Review");
 const passport = require('passport');
-const User = require('../Models/User')
+
 
 router.post("/",
     passport.authenticate("jwt", { session: false }),
