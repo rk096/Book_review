@@ -6,13 +6,14 @@ const User = require('./Models/User');
 const JwtStrategy = require("passport-jwt").Strategy,
     ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
+const reviewroute = require('./Controller/ReviewController');
 
 
 const port = 8000;
 const app = express();
 app.use(cors());
 app.use(express.json())
-    
+
 
 MONGO_URI = "mongodb+srv://richakamani32:23112003@bookreview.stiw9v8.mongodb.net/?retryWrites=true&w=majority&appName=BookReview"
 
@@ -34,7 +35,7 @@ mongoose.connect(MONGO_URI,
 //setup passport-jwt
 let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = "thisKeyIsSupposedToBeSecret";
+opts.secretOrKey = "ItisaSecretKeyofMyProject";
 passport.use(
     new JwtStrategy(opts, async function (jwt_payload, done) {
         try {
@@ -55,7 +56,8 @@ app.get("/", (req, res) => {
 
 });
 
-app.use('/auth', authroute );
+app.use('/auth', authroute);
+app.use('/reviews', reviewroute);
 
 
 app.listen(port, () => {
