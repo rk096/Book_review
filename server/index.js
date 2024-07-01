@@ -8,7 +8,7 @@ const JwtStrategy = require("passport-jwt").Strategy,
 const passport = require("passport");
 const reviewroute = require('./Controller/ReviewController');
 const bookroute = require('./Controller/BookController');
-
+const Book = require('./Models/Book');
 
 const port = 8000;
 const app = express();
@@ -73,11 +73,14 @@ const scrapeTrendingBooks = async function(){
       const title = (obj.title);
       books.push({author_key,author_name,first_publish_year,title});
     }
-    console.log(books);
-    //return books;
+    //console.log(books);
+    for (const book of books) {
+      await Book.findOneAndUpdate({ title: books.title, author_key : books.author_key, author_name : books.author_name }, book, { upsert: true });
+    }
+
+
   } catch (error) {
     console.error('Error scraping:', error.message);
-    //return [];
   }
 };
 
