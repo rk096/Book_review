@@ -25,16 +25,9 @@ This project implements a RESTful API for a book review platform with user authe
 
 ## Setup
 
-1. **Clone the repository:**
+1. **Clone the repository & install dependancies & run**
    ```bash
    git clone https://github.com/rk096/Book_review
    cd book_review
    npm install
-   
-2.**Install dependencies:**
-   npm install
-
-
-3. **Run the application:**
-  bash
-  nodemon index 
+   nodemon index
