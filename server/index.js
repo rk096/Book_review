@@ -1,6 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors")
+const authroute = require('./Controller/Auth');
+const User = require('./Models/User');
+const JwtStrategy = require("passport-jwt").Strategy,
+    ExtractJwt = require("passport-jwt").ExtractJwt;
+const passport = require("passport");
 
 
 const port = 8000;
@@ -22,15 +27,35 @@ mongoose.connect(MONGO_URI,
     })
     .catch((err) => {
         console.log("Error while connecting to Mongo");
-        console.log(err);
+        //console.log(err);
     });
 
 
+//setup passport-jwt
+let opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = "thisKeyIsSupposedToBeSecret";
+passport.use(
+    new JwtStrategy(opts, async function (jwt_payload, done) {
+        try {
+            const user = await User.findOne({ _id: jwt_payload.identifier });
+            if (user) {
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
+        } catch (err) {
+            return done(err, false);
+        }
+    })
+);
 
 app.get("/", (req, res) => {
     res.send("hello world");
 
 });
+
+app.use('/auth', authroute );
 
 
 app.listen(port, () => {
